@@ -29,7 +29,7 @@ function addBook(e) {
 
   const title = titleInput.value;
   const author = authorInput.value;
-  const year = yearInput.value;
+  const year = Number(yearInput.value);
   const isComplete = isCompleteInput.checked;
 
   const book = {
