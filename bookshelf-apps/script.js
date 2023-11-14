@@ -1,26 +1,20 @@
-// Mengambil elemen-elemen HTML
-const bookForm = document.getElementById("bookForm");
-const titleInput = document.getElementById("title");
-const authorInput = document.getElementById("author");
-const yearInput = document.getElementById("year");
-const isCompleteInput = document.getElementById("isComplete");
-const incompleteShelf = document.getElementById("incompleteShelf");
-const completeShelf = document.getElementById("completeShelf");
-
 //Membuat array yang menyimpan data buku
 let books = [];
 
 // Menampilkan buku pada rak berdasarkan kondisi isComplete
 function displayBooks() {
-  incompleteShelf.innerHTML = "";
-  completeShelf.innerHTML = "";
+  const unfinished = document.getElementById("unfinished");
+  const finished = document.getElementById("finished");
+
+  unfinished.innerHTML = "";
+  finished.innerHTML = "";
 
   books.forEach((book) => {
     const bookElement = createBookElement(book);
     if (book.isComplete) {
-      completeShelf.appendChild(bookElement);
+      finished.appendChild(bookElement);
     } else {
-      incompleteShelf.appendChild(bookElement);
+      unfinished.appendChild(bookElement);
     }
   });
 }
@@ -28,6 +22,10 @@ function displayBooks() {
 // Menambahkan buku baru
 function addBook(e) {
   e.preventDefault();
+  const titleInput = document.getElementById("title");
+  const authorInput = document.getElementById("author");
+  const yearInput = document.getElementById("year");
+  const isCompleteInput = document.getElementById("isComplete");
 
   const title = titleInput.value;
   const author = authorInput.value;
@@ -41,6 +39,13 @@ function addBook(e) {
     year,
     isComplete,
   };
+
+  function resetForm() {
+    titleInput.value = "";
+    authorInput.value = "";
+    yearInput.value = "";
+    isCompleteInput.checked = false;
+  }
 
   books.push(book);
   displayBooks();
@@ -97,36 +102,27 @@ function createBookElement(book) {
       <p><span class="font-bold">Year:</span> ${book.year}</p>
     </div>
     <div>
-      <button class="p-2 bg-green-500 text-white rounded mr-2" onclick="moveBook(${book.id})">Move</button>
+      <button class="p-2 bg-blue-500 text-white rounded mr-2" onclick="moveBook(${book.id})">Move</button>
       <button class="p-2 bg-red-500 text-white rounded" onclick="removeBook(${book.id})">Remove</button>
     </div>
   `;
   return bookElement;
 }
 
-//membersihkan form setelah buku ditambahkan
-function resetForm() {
-  titleInput.value = "";
-  authorInput.value = "";
-  yearInput.value = "";
-  isCompleteInput.checked = false;
-}
-
 loadBooksFromLocalStorage();
 
 //menambahkan event listener pada form
-bookForm.addEventListener("submit", addBook);
+document.getElementById("bookForm").addEventListener("submit", addBook);
+
 function removeBook(id) {
   const bookIndex = books.findIndex((book) => book.id === id);
-  if (bookIndex !== -1) {
-    const book = books[bookIndex];
-    const confirmed = confirm(
-      `Apakah anda yakin untuk menghapus "${book.title}"?`
-    );
-    if (confirmed) {
-      books.splice(bookIndex, 1);
-      saveBooksToLocalStorage();
-      displayBooks();
-    }
+
+  if (
+    bookIndex !== -1 &&
+    confirm(`Apakah anda yakin untuk menghapus "${books[bookIndex].title}"?`)
+  ) {
+    books.splice(bookIndex, 1);
+    saveBooksToLocalStorage();
+    displayBooks();
   }
 }
