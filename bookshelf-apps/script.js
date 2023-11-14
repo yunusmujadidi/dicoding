@@ -104,7 +104,7 @@ function createBookElement(book) {
   return bookElement;
 }
 
-// Membersihkan form setelah buku ditambahkan
+//membersihkan form setelah buku ditambahkan
 function resetForm() {
   titleInput.value = "";
   authorInput.value = "";
@@ -112,8 +112,21 @@ function resetForm() {
   isCompleteInput.checked = false;
 }
 
-// Memuat data buku saat halaman dimuat
 loadBooksFromLocalStorage();
 
-// Menambahkan event listener untuk form
+//menambahkan event listener pada form
 bookForm.addEventListener("submit", addBook);
+function removeBook(id) {
+  const bookIndex = books.findIndex((book) => book.id === id);
+  if (bookIndex !== -1) {
+    const book = books[bookIndex];
+    const confirmed = confirm(
+      `Apakah anda yakin untuk menghapus "${book.title}"?`
+    );
+    if (confirmed) {
+      books.splice(bookIndex, 1);
+      saveBooksToLocalStorage();
+      displayBooks();
+    }
+  }
+}
