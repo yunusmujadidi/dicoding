@@ -5,6 +5,7 @@ import NotesForm from "./components/NotesForms";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { Note } from "./utils";
 import initialData from "./utils";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [notes, setNotes] = useState<Note[]>(initialData);
@@ -29,7 +30,7 @@ const App = () => {
   };
 
   return (
-    <Grid templateAreas={`"nav" "main"`}>
+    <Grid templateAreas={`"nav" "main" "footer"`}>
       <GridItem area="nav">
         <NavBar />
       </GridItem>
@@ -41,6 +42,9 @@ const App = () => {
           onDeleteNote={handleDeleteNote}
           onArchiveNote={handleArchiveNote}
         />
+      </GridItem>
+      <GridItem area="footer">
+        <Footer />
       </GridItem>
     </Grid>
   );
