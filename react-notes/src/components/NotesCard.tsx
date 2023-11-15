@@ -16,15 +16,17 @@ interface NotesCardProps {
 
 const NotesCard = ({ data }: NotesCardProps) => {
   return (
-    <Card>
+    <Card borderRadius={10} width="1000">
       <CardHeader>
-        <Heading size="md"> {data.title}</Heading>
+        <Heading size="lg"> {data.title}</Heading>
+        <Heading size="s"> {data.createdAt}</Heading>
       </CardHeader>
       <CardBody>
         <Text>{data.body}</Text>
       </CardBody>
-      <CardFooter>
+      <CardFooter justifyContent="space-between">
         <Button>Remove</Button>
+        <Button>Archive</Button>
       </CardFooter>
     </Card>
   );

@@ -11,7 +11,7 @@ const NotesGrid = ({ notes }: NotesGridProps) => {
     <SimpleGrid
       spacing={4}
       padding={5}
-      templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+      templateColumns="repeat(auto-fill, minmax(400px, 1fr))"
     >
       {notes.map((note) => (
         <NotesCard key={note.id} data={note} />
