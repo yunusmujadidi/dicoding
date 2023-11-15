@@ -13,9 +13,10 @@ import { Note } from "../utils";
 interface NotesCardProps {
   data: Note;
   onDeleteNote: (id: number) => void;
+  onArchiveNote: (id: number) => void;
 }
 
-const NotesCard = ({ data, onDeleteNote }: NotesCardProps) => {
+const NotesCard = ({ data, onDeleteNote, onArchiveNote }: NotesCardProps) => {
   return (
     <Card borderRadius={10} width="1000">
       <CardHeader>
@@ -27,7 +28,9 @@ const NotesCard = ({ data, onDeleteNote }: NotesCardProps) => {
       </CardBody>
       <CardFooter justifyContent="space-between">
         <Button onClick={() => onDeleteNote(data.id)}>Remove</Button>
-        <Button>Archive</Button>
+        <Button onClick={() => onArchiveNote(data.id)}>
+          {data.archived ? "Unarchive" : "Archive"}
+        </Button>
       </CardFooter>
     </Card>
   );

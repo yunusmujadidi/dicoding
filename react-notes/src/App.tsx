@@ -8,15 +8,26 @@ import initialData from "./utils";
 
 const App = () => {
   const [notes, setNotes] = useState<Note[]>(initialData);
+
   const handleAddNotes = (note: Note) => {
     setNotes((notes) => [
       ...notes,
       { ...note, createdAt: new Date().toISOString() },
     ]);
   };
+
   const handleDeleteNote = (id: number) => {
     setNotes((notes) => notes.filter((note) => note.id !== id));
   };
+
+  const handleArchiveNote = (id: number) => {
+    setNotes((notes) =>
+      notes.map((note) =>
+        note.id === id ? { ...note, archived: !note.archived } : note
+      )
+    );
+  };
+
   return (
     <Grid templateAreas={`"nav" "main"`}>
       <GridItem area="nav">
@@ -25,7 +36,11 @@ const App = () => {
 
       <GridItem area="main">
         <NotesForm onAddNotes={handleAddNotes} />
-        <NotesGrid notes={notes} onDeleteNote={handleDeleteNote} />
+        <NotesGrid
+          notes={notes}
+          onDeleteNote={handleDeleteNote}
+          onArchiveNote={handleArchiveNote}
+        />
       </GridItem>
     </Grid>
   );
