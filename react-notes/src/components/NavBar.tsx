@@ -4,7 +4,7 @@ import ColorModeSwitch from "./ColorModeSwitch";
 const NavBar = () => {
   return (
     <HStack justifyContent="space-between" padding="10px">
-      <Heading size="2xl" padding="3">
+      <Heading size="xl" padding="3">
         simpleNotes
       </Heading>
       <ColorModeSwitch />

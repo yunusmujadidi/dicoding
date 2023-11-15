@@ -17,11 +17,19 @@ interface NotesCardProps {
 }
 
 const NotesCard = ({ data, onDeleteNote, onArchiveNote }: NotesCardProps) => {
+  const formattedDate = new Intl.DateTimeFormat("id-ID", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(data.createdAt));
+
   return (
     <Card borderRadius={10} width="1000">
       <CardHeader>
         <Heading size="lg"> {data.title}</Heading>
-        <Heading size="s"> {data.createdAt}</Heading>
+        <Heading size="s">{formattedDate}</Heading>
       </CardHeader>
       <CardBody>
         <Text>{data.body}</Text>

@@ -35,9 +35,11 @@ const NotesForms = ({ onAddNotes }: { onAddNotes: (note: Note) => void }) => {
 
   return (
     <>
-      <Heading padding={3}>New Notes</Heading>
+      <Heading size="lg" padding={3}>
+        New Notes
+      </Heading>
       <form className="addform" onSubmit={handleSubmit}>
-        <Stack spacing={3} marginTop={5} padding={3} width={1000}>
+        <Stack spacing={3} marginTop={5} padding={3}>
           <Input
             placeholder="Judul"
             type="text"

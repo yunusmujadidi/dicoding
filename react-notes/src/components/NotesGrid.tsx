@@ -1,4 +1,4 @@
-import { SimpleGrid, Button, Heading } from "@chakra-ui/react";
+import { SimpleGrid, Heading, Input } from "@chakra-ui/react";
 import NotesCard from "./NotesCard";
 import { Note } from "../utils";
 import { useState } from "react";
@@ -10,36 +10,48 @@ interface NotesGridProps {
 }
 
 const NotesGrid = ({ notes, onDeleteNote, onArchiveNote }: NotesGridProps) => {
-  const [showArchived, setShowArchived] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
+
   const archivedNotes = notes.filter((note) => note.archived);
   const unarchivedNotes = notes.filter((note) => !note.archived);
 
+  const filteredUnarchivedNotes = searchKeyword
+    ? unarchivedNotes.filter((note) =>
+        note.title.toLowerCase().includes(searchKeyword.toLowerCase())
+      )
+    : unarchivedNotes;
+
+  const filteredArchivedNotes = searchKeyword
+    ? archivedNotes.filter((note) =>
+        note.title.toLowerCase().includes(searchKeyword.toLowerCase())
+      )
+    : archivedNotes;
+
   return (
-    <div>
-      <Heading as="h2" size="md" marginBottom={3}>
-        {showArchived ? "Archived Notes" : "Notes"}
-      </Heading>
-      {unarchivedNotes.length === 0 && !showArchived && (
-        <div>Tidak ada catatan</div>
+    <>
+      <Input
+        placeholder="Search notes"
+        value={searchKeyword}
+        onChange={(e) => setSearchKeyword(e.target.value)}
+        margin={3}
+      />
+      {filteredUnarchivedNotes.length === 0 && unarchivedNotes.length !== 0 && (
+        <div>No unarchived notes found</div>
       )}
-      {showArchived && archivedNotes.length === 0 && (
-        <div>Tidak ada arsip catatan</div>
+      {filteredArchivedNotes.length === 0 && archivedNotes.length !== 0 && (
+        <div>No archived notes found</div>
       )}
-      <SimpleGrid
-        spacing={4}
-        padding={5}
-        templateColumns="repeat(auto-fill, minmax(400px, 1fr))"
-      >
-        {showArchived
-          ? archivedNotes.map((note) => (
-              <NotesCard
-                key={note.id}
-                data={note}
-                onDeleteNote={onDeleteNote}
-                onArchiveNote={onArchiveNote}
-              />
-            ))
-          : unarchivedNotes.map((note) => (
+      {filteredUnarchivedNotes.length !== 0 && (
+        <>
+          <Heading size="xl" margin={3}>
+            Unarchived Notes
+          </Heading>
+          <SimpleGrid
+            spacing={4}
+            padding={5}
+            templateColumns="repeat(auto-fill, minmax(400px, 1fr))"
+          >
+            {filteredUnarchivedNotes.map((note) => (
               <NotesCard
                 key={note.id}
                 data={note}
@@ -47,13 +59,33 @@ const NotesGrid = ({ notes, onDeleteNote, onArchiveNote }: NotesGridProps) => {
                 onArchiveNote={onArchiveNote}
               />
             ))}
-      </SimpleGrid>
-      <div>
-        <Button margin={3} onClick={() => setShowArchived(!showArchived)}>
-          {showArchived ? "Unarchived Notes" : "Archived Notes"}
-        </Button>
-      </div>
-    </div>
+          </SimpleGrid>
+        </>
+      )}
+      {filteredArchivedNotes.length !== 0 && (
+        <>
+          <Heading size="xl" margin={3}>
+            Archived Notes
+          </Heading>
+          <SimpleGrid
+            spacing={4}
+            padding={5}
+            templateColumns="repeat(auto-fill, minmax(400px, 1fr))"
+          >
+            {filteredArchivedNotes.map((note) => (
+              <NotesCard
+                key={note.id}
+                data={note}
+                onDeleteNote={onDeleteNote}
+                onArchiveNote={onArchiveNote}
+              />
+            ))}
+          </SimpleGrid>
+        </>
+      )}
+      {filteredUnarchivedNotes.length === 0 &&
+        filteredArchivedNotes.length === 0 && <div>No notes found</div>}
+    </>
   );
 };
 
