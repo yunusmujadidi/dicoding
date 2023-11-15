@@ -5,7 +5,6 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import initialData from "./utils";
 
 const App = () => {
-  const handleNewItem = {};
   return (
     <Grid templateAreas={`"nav" "main"`}>
       <GridItem area="nav">

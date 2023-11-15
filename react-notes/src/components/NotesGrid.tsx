@@ -1,9 +1,9 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import NotesCard from "./NotesCard";
-import { Props } from "../utils";
+import { Note } from "../utils";
 
 interface NotesGridProps {
-  notes: Props[];
+  notes: Note[];
 }
 
 const NotesGrid = ({ notes }: NotesGridProps) => {

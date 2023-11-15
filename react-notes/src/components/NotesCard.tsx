@@ -8,10 +8,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { Props } from "../utils";
+import { Note } from "../utils";
 
 interface NotesCardProps {
-  data: Props;
+  data: Note;
 }
 
 const NotesCard = ({ data }: NotesCardProps) => {
