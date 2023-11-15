@@ -1,10 +1,18 @@
+import { useState } from "react";
 import NavBar from "./components/NavBar";
 import NotesGrid from "./components/NotesGrid";
 import NotesForm from "./components/NotesForms";
 import { Grid, GridItem } from "@chakra-ui/react";
-import initialData from "./utils";
+import { Note } from "./utils";
 
 const App = () => {
+  const [notes, setNotes] = useState<Note[]>([]);
+  const handleAddNotes = (note: Note) => {
+    setNotes((prevNotes) => [
+      ...prevNotes,
+      { ...note, createdAt: new Date().toISOString() },
+    ]);
+  };
   return (
     <Grid templateAreas={`"nav" "main"`}>
       <GridItem area="nav">
@@ -12,8 +20,8 @@ const App = () => {
       </GridItem>
 
       <GridItem area="main">
-        <NotesForm />
-        <NotesGrid notes={initialData} />
+        <NotesForm onAddNotes={handleAddNotes} />
+        <NotesGrid notes={notes} />
       </GridItem>
     </Grid>
   );

@@ -2,20 +2,9 @@ import { Button, Heading, Input, Stack, Textarea } from "@chakra-ui/react";
 import { useState } from "react";
 import { Note } from "../utils";
 
-const NotesForms = () => {
-  const [notes, setNotes] = useState<Note[]>([]);
-
+const NotesForms = ({ onAddNotes }: { onAddNotes: (note: Note) => void }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [archived, setArchived] = useState(false);
-  const [id, setId] = useState(Date.now());
-
-  const handleAddNotes = (note: Note) => {
-    setNotes((prevNotes) => [
-      ...prevNotes,
-      { ...note, createdAt: new Date().toISOString() },
-    ]);
-  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,7 +19,7 @@ const NotesForms = () => {
       archived: false,
       createdAt: new Date().toISOString(),
     };
-    handleAddNotes(newNotes);
+    onAddNotes(newNotes);
     console.log(newNotes);
     setTitle("");
     setBody("");
@@ -41,7 +30,6 @@ const NotesForms = () => {
       <Heading padding={3}>New Notes</Heading>
       <form className="addform" onSubmit={handleSubmit}>
         <Stack spacing={3} marginTop={5} padding={3}>
-          {" "}
           <Input
             placeholder="Judul"
             type="text"
