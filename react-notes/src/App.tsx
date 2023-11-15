@@ -4,14 +4,18 @@ import NotesGrid from "./components/NotesGrid";
 import NotesForm from "./components/NotesForms";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { Note } from "./utils";
+import initialData from "./utils";
 
 const App = () => {
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<Note[]>(initialData);
   const handleAddNotes = (note: Note) => {
-    setNotes((prevNotes) => [
-      ...prevNotes,
+    setNotes((notes) => [
+      ...notes,
       { ...note, createdAt: new Date().toISOString() },
     ]);
+  };
+  const handleDeleteNote = (id: number) => {
+    setNotes((notes) => notes.filter((note) => note.id !== id));
   };
   return (
     <Grid templateAreas={`"nav" "main"`}>
@@ -21,7 +25,7 @@ const App = () => {
 
       <GridItem area="main">
         <NotesForm onAddNotes={handleAddNotes} />
-        <NotesGrid notes={notes} />
+        <NotesGrid notes={notes} onDeleteNote={handleDeleteNote} />
       </GridItem>
     </Grid>
   );

@@ -12,9 +12,10 @@ import { Note } from "../utils";
 
 interface NotesCardProps {
   data: Note;
+  onDeleteNote: (id: number) => void;
 }
 
-const NotesCard = ({ data }: NotesCardProps) => {
+const NotesCard = ({ data, onDeleteNote }: NotesCardProps) => {
   return (
     <Card borderRadius={10} width="1000">
       <CardHeader>
@@ -25,7 +26,7 @@ const NotesCard = ({ data }: NotesCardProps) => {
         <Text>{data.body}</Text>
       </CardBody>
       <CardFooter justifyContent="space-between">
-        <Button>Remove</Button>
+        <Button onClick={() => onDeleteNote(data.id)}>Remove</Button>
         <Button>Archive</Button>
       </CardFooter>
     </Card>

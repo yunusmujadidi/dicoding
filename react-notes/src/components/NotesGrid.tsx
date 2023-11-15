@@ -4,9 +4,10 @@ import { Note } from "../utils";
 
 interface NotesGridProps {
   notes: Note[];
+  onDeleteNote: (id: number) => void;
 }
 
-const NotesGrid = ({ notes }: NotesGridProps) => {
+const NotesGrid = ({ notes, onDeleteNote }: NotesGridProps) => {
   return (
     <SimpleGrid
       spacing={4}
@@ -14,7 +15,7 @@ const NotesGrid = ({ notes }: NotesGridProps) => {
       templateColumns="repeat(auto-fill, minmax(400px, 1fr))"
     >
       {notes.map((note) => (
-        <NotesCard key={note.id} data={note} />
+        <NotesCard key={note.id} data={note} onDeleteNote={onDeleteNote} />
       ))}
     </SimpleGrid>
   );
