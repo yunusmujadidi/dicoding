@@ -1,10 +1,10 @@
-import { Text } from "@chakra-ui/react";
+import { Text, Box } from "@chakra-ui/react";
 
 const Footer = () => {
   return (
-    <Text textAlign="center" fontSize="md" mt={4} pb={4}>
-      {`© @indomieespicy made with love <3`}
-    </Text>
+    <Box as="footer" mt="auto" py={4} textAlign="center">
+      <Text fontSize="md">{`© @indomieespicy made with love <3`}</Text>
+    </Box>
   );
 };
 
