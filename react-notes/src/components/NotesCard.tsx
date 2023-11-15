@@ -6,6 +6,7 @@ import {
   CardHeader,
   Heading,
   Text,
+  Divider,
 } from "@chakra-ui/react";
 
 import { Note } from "../utils";
@@ -26,16 +27,23 @@ const NotesCard = ({ data, onDeleteNote, onArchiveNote }: NotesCardProps) => {
   }).format(new Date(data.createdAt));
 
   return (
-    <Card borderRadius={10} width="1000">
+    <Card borderRadius={10} width="1000" shadow="2xl" rounded="lg">
       <CardHeader>
-        <Heading size="lg"> {data.title}</Heading>
-        <Heading size="s">{formattedDate}</Heading>
+        <Heading fontWeight="semibold" size="lg">
+          {data.title}
+        </Heading>
+        <Heading fontWeight="semibold" size="s">
+          {formattedDate}
+        </Heading>
       </CardHeader>
+      <Divider />
       <CardBody>
         <Text>{data.body}</Text>
       </CardBody>
       <CardFooter justifyContent="space-between">
-        <Button onClick={() => onDeleteNote(data.id)}>Remove</Button>
+        <Button bgColor="blue.500" onClick={() => onDeleteNote(data.id)}>
+          Remove
+        </Button>
         <Button onClick={() => onArchiveNote(data.id)}>
           {data.archived ? "Unarchive" : "Archive"}
         </Button>

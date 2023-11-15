@@ -35,16 +35,10 @@ const NotesGrid = ({ notes, onDeleteNote, onArchiveNote }: NotesGridProps) => {
         onChange={(e) => setSearchKeyword(e.target.value)}
         margin={3}
       />
-      {filteredUnarchivedNotes.length === 0 && unarchivedNotes.length !== 0 && (
-        <div>No unarchived notes found</div>
-      )}
-      {filteredArchivedNotes.length === 0 && archivedNotes.length !== 0 && (
-        <div>No archived notes found</div>
-      )}
       {filteredUnarchivedNotes.length !== 0 && (
         <>
-          <Heading size="xl" margin={3}>
-            Unarchived Notes
+          <Heading fontWeight="semibold" size="xl" margin={3}>
+            Notes
           </Heading>
           <SimpleGrid
             spacing={4}
@@ -64,7 +58,7 @@ const NotesGrid = ({ notes, onDeleteNote, onArchiveNote }: NotesGridProps) => {
       )}
       {filteredArchivedNotes.length !== 0 && (
         <>
-          <Heading size="xl" margin={3}>
+          <Heading fontWeight="semibold" size="xl" margin={3}>
             Archived Notes
           </Heading>
           <SimpleGrid
@@ -83,8 +77,19 @@ const NotesGrid = ({ notes, onDeleteNote, onArchiveNote }: NotesGridProps) => {
           </SimpleGrid>
         </>
       )}
-      {filteredUnarchivedNotes.length === 0 &&
-        filteredArchivedNotes.length === 0 && <div>No notes found</div>}
+      {filteredUnarchivedNotes.length === 0 && (
+        <div>
+          {filteredArchivedNotes.length === 0 ? (
+            <div>No notes found</div>
+          ) : (
+            <div>No unarchived notes found</div>
+          )}
+        </div>
+      )}
+      {filteredUnarchivedNotes.length !== 0 &&
+        filteredArchivedNotes.length === 0 && (
+          <div>No archived notes found</div>
+        )}
     </>
   );
 };
